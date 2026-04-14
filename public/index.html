@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>엑셀 데이터 축적기</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <h1>엑셀 업로드</h1>
+
+    <div style="margin-bottom: 20px; display:flex; align-items:center; gap:12px;">
+      <button onclick="downloadExcel()">엑셀 추출</button>
+      <label>
+        <input type="checkbox" id="includeQuantity">
+        수량 포함
+      </label>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <input type="file" id="fileInput" multiple>
+      <button onclick="upload()">업로드</button>
+      <button onclick="resetData()">초기화</button>
+    </div>
+
+    <div id="result"></div>
+
+    <h2>현재 데이터</h2>
+    <div id="data"></div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+<button onclick="goShop()">쇼핑 화면 이동</button>
+

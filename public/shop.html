@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>쇼핑 리스트</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1 id="pageTitle">오늘의 쇼핑</h1>
+
+    <input type="file" id="fileInput">
+    <button onclick="uploadToday()">업로드</button>
+
+    <div id="shoppingList"></div>
+
+    <button onclick="finishShopping()">쇼핑 완료</button>
+  </div>
+
+  <!-- 팝업 메뉴 -->
+  <div id="popupMenu" class="popup-menu">
+    <div class="popup-content">
+      <button onclick="showMap()">지도보기</button>
+      <button onclick="showMemo()">메모</button>
+    </div>
+  </div>
+
+  <!-- 메모 팝업 -->
+  <div id="memoPopup" class="memo-popup">
+    <div class="memo-content">
+      <h3>메모</h3>
+      <textarea id="memoText" placeholder="메모를 입력하세요..."></textarea>
+      <div class="memo-buttons">
+        <button onclick="saveMemo()">저장</button>
+        <button onclick="closeMemo()">취소</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 쇼핑 완료 결과 팝업 -->
+  <div id="resultPopup" class="result-popup">
+    <div class="result-content">
+      <div class="result-header">
+        <h3>미구매 품목</h3>
+        <button onclick="copyToClipboard()" class="copy-button" title="복사하기">📋</button>
+      </div>
+      <div id="unpurchasedItems"></div>
+      <div class="result-buttons">
+        <button onclick="closeResult()">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="shop.js"></script>
+</body>
+</html>
+
+<button onclick="goAdmin()">관리자</button>
