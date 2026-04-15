@@ -20,11 +20,22 @@ async function uploadToday() {
 
     const data = await res.json();
 
+    resetMemoSession();
     renderList(data);
 
   } catch (err) {
     console.error(err);
   }
+}
+
+let memoSessionId = `memo_${Date.now()}`;
+
+function resetMemoSession() {
+  memoSessionId = `memo_${Date.now()}`;
+}
+
+function getMemoKey(itemName) {
+  return `${memoSessionId}_${itemName}`;
 }
 
 const categoryNotes = {
@@ -165,6 +176,7 @@ function renderList(data) {
         e.stopPropagation();
       });
 
+      card.dataset.quantity = item.quantity;
       section.appendChild(card);
     });
 
@@ -247,7 +259,7 @@ function addSwipeFunctionality(card) {
 
 function deleteItem(itemName) {
   // localStorage에서 메모 삭제
-  const memoKey = `memo_${itemName}`;
+  const memoKey = getMemoKey(itemName);
   localStorage.removeItem(memoKey);
 
   // 카드 삭제
@@ -327,7 +339,7 @@ function showMemo(item) {
   title.textContent = `${item.name} 메모`;
 
   // 기존 메모 불러오기 (localStorage에서)
-  const memoKey = `memo_${item.name}`;
+  const memoKey = getMemoKey(item.name);
   textarea.value = localStorage.getItem(memoKey) || '';
 
   popup.style.display = 'flex';
@@ -345,7 +357,7 @@ function saveMemo() {
   const itemName = document.querySelector('.memo-content h3').textContent.replace(' 메모', '');
 
   // 메모 저장 (localStorage에)
-  const memoKey = `memo_${itemName}`;
+  const memoKey = getMemoKey(itemName);
   localStorage.setItem(memoKey, textarea.value);
 
   closeMemo();
@@ -365,12 +377,13 @@ function finishShopping() {
     const checkbox = card.querySelector('input[type="checkbox"]');
     if (!checkbox.checked) {
       const itemName = card.querySelector('.card-info strong').textContent;
-      const memoKey = `memo_${itemName}`;
+      const quantity = card.dataset.quantity || card.querySelector('.card-info').textContent.match(/수량:\s*(\d+)/)?.[1] || '1';
+      const memoKey = getMemoKey(itemName);
       const memo = localStorage.getItem(memoKey) || '';
 
       // 메모가 있으면 [메모] 형식으로, 없으면 빈 문자열
-      const memoText = memo ? `[${memo}]` : '';
-      unpurchasedItems.push(`${itemName}${memoText}`);
+      const memoText = memo ? ` [${memo}]` : '';
+      unpurchasedItems.push(`${itemName} ${quantity}${memoText}`);
     }
   });
 
