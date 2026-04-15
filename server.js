@@ -267,7 +267,7 @@ app.post("/reset", (req, res) => {
 
 
 
-
+  
 
 // 🔥 진짜 데이터 조회 API
 app.get("/data", (req, res) => {
